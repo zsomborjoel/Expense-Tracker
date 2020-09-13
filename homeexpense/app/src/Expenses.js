@@ -6,14 +6,38 @@ import { Button, Container, FormGroup, Form, Label, Input } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 class Expense extends Component {
-    
+
     state = { 
-        date: new Date()
+        date: new Date(),
+        isLoading: true,
+        expenses: [],
+        categorires: []
+    }
+
+    // await lets you it fetched data and it is ready
+    // always modify state with setState
+    async componentDidMount() {
+        const response = await fetch('/api/categories');
+        const body = await response.json();
+
+        this.setState({Categorires: body, isLoading: false});
     }
 
     render() { 
-        const title = <h3>Add Expense</h3>
+        const title = <h3>Add Expense</h3>;
+        const {Categorires, isLoading} = this.state;
 
+
+        if (isLoading)
+            return<div>Loading...</div>
+
+        let optionList = 
+            Categorires.map( (category) => 
+                <option value={category.id} key={category.id}>
+                    {category.name}
+                </option>
+            )
+    
         return (
             <div>
                 <AppNav/>
@@ -25,9 +49,13 @@ class Expense extends Component {
                             <Label for="title">Title</Label>
                             <Input type="text" name="title" id="title" onChange={this.handleChange}/>
                         </FormGroup>
-
+                            
                         <FormGroup>
                             <Label for="title">Category</Label>
+                            <select>
+                                {optionList}
+                            </select>
+
                             <Input type="text" name="category" id="category" onChange={this.handleChange}/>
                         </FormGroup>
 

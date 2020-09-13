@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "expense")
 public class Expense {
@@ -26,6 +28,7 @@ public class Expense {
     @ManyToOne
     private Category category;
 
+    @JsonIgnore
     @ManyToOne
     private User user;
 
