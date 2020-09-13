@@ -5,7 +5,9 @@ import Home from './Home';
 import Expense from './Expenses';
 
 class App extends Component {
+
     state = { }
+    
     render() {
         // Create a router consist these pages and switches between them
         return(
